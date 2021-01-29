@@ -46,7 +46,7 @@ class runner:
 
 class binary_runner(runner):
     def __init__(self, runnable_file='', inf_folder='', ouf_folder='', timelimit=0):
-        super.__init__(self,runnable_file,inf_folder,ouf_folder,timelimit)
+        super().__init__(runnable_file,inf_folder,ouf_folder,timelimit)
 
     def run_helper(self,fname_in,fname_out):
         with open(fname_in,'r') as inf, open(fname_out,'w') as ouf:
@@ -61,7 +61,7 @@ class binary_runner(runner):
 
 class java_runner(runner):
     def __init__(self, runnable_file='', inf_folder='', ouf_folder='', timelimit=0):
-        super.__init__(self,runnable_file,inf_folder,ouf_folder,timelimit)
+        super().__init__(runnable_file,inf_folder,ouf_folder,timelimit)
 
     def run_helper(self,fname_in,fname_out):
         with open(fname_in,'r') as inf, open(fname_out,'w') as ouf:
@@ -79,7 +79,7 @@ class java_runner(runner):
 
 class python_runner(runner):
     def __init__(self, runnable_file='', inf_folder='', ouf_folder='', timelimit=0):
-        super.__init__(self,runnable_file,inf_folder,ouf_folder,timelimit)
+        super().__init__(runnable_file,inf_folder,ouf_folder,timelimit)
 
     def run_helper(self,fname_in,fname_out):
         with open(fname_in,'r') as inf, open(fname_out,'w') as ouf:
@@ -95,7 +95,7 @@ class python_runner(runner):
 
 class python2_runner(runner):
     def __init__(self, runnable_file='', inf_folder='', ouf_folder='', timelimit=0):
-        super.__init__(self,runnable_file,inf_folder,ouf_folder,timelimit)
+        super().__init__(runnable_file,inf_folder,ouf_folder,timelimit)
 
     def run_helper(self,fname_in,fname_out):
         with open(fname_in,'r') as inf, open(fname_out,'w') as ouf:

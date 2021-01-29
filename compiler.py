@@ -11,18 +11,17 @@ class compiler():
         self.runnable_directory = runnable_directory
         assert(os.path.isfile(src))
         os.makedirs(os.path.dirname(runnable_directory), exist_ok=True)
-        self.runnable_file = compile()
 
     def compile(self):
-        return ''
+        pass
 
 
 class c_compiler(compiler):
     def __init__(self, src, runnable_file):
-        super.__init__(src, runnable_file)
+        super().__init__(src, runnable_file)
 
     def compile(self):
-        command = C_COMPILER + C_FLAGS + [self.src] + ['-o', os.path.join(self.runnable_directory, os.path.splitext(self.src)[0])] + C_LFLAGS
+        command = C_COMPILER + C_FLAGS + [self.src] + ['-o', os.path.join(self.runnable_directory, os.path.splitext(os.path.basename(self.src))[0])] + C_LFLAGS
         print('Compiling: ', ' '.join(command))
         p= subprocess.run(command)
         if(p.returncode):
@@ -30,13 +29,14 @@ class c_compiler(compiler):
             sys.exit(1)
         else:
             print(os.path.splitext(os.path.basename(self.src))[0], 'generated')
+        self.runnable_file =  os.path.join(self.runnable_directory, os.path.splitext(os.path.basename(self.src))[0])
 
 class cpp_compiler(compiler):
-    def __init__(self, src, runnable_file):
-        super.__init__(src, runnable_file)
+    def __init__(self, src,  runnable_directory):
+        super().__init__(src,  runnable_directory)
 
     def compile(self):
-        command = CPP_COMPILER + CPP_FLAGS + [self.src] + ['-o', os.path.join(self.runnable_directory, os.path.splitext(self.src)[0])] + CPP_LFLAGS
+        command = CPP_COMPILER + CPP_FLAGS + [self.src] + ['-o', os.path.join(self.runnable_directory, os.path.splitext(os.path.basename(self.src))[0])] + CPP_LFLAGS
         print('Compiling: ', ' '.join(command))
         p= subprocess.run(command)
         if(p.returncode):
@@ -45,11 +45,11 @@ class cpp_compiler(compiler):
         else:
             print(os.path.splitext(os.path.basename(self.src))[0], 'generated')
 
-        return os.path.join(os.path.join(self.runnable_directory,os.path.splitext(os.path.basename(self.src))[0]))
+        self.runnable_file =  os.path.join(self.runnable_directory, os.path.splitext(os.path.basename(self.src))[0])
 
 class java_compiler(compiler):
-    def __init__(self, src, runnable_file):
-        super.__init__(src, runnable_file)
+    def __init__(self, src,  runnable_directory):
+        super().__init__(src,  runnable_directory)
 
     def compile(self):
         command= JAVA_COMPILER + ['-d', self.runnable_directory] + [self.src]
@@ -61,20 +61,20 @@ class java_compiler(compiler):
         else:
             print(self.src + '.class', 'generated')
 
-        return os.path.join(os.path.join(self.runnable_directory,os.path.splitext(os.path.basename(self.src))[0]))
+        self.runnable_file = os.path.join(os.path.join(self.runnable_directory,os.path.splitext(os.path.basename(self.src))[0]))
 
 class python_compiler(compiler):
-    def __init__(self, src, runnable_file=' '):
-        super.__init__(src, runnable_file)
+    def __init__(self, src,  runnable_directory=' '):
+        super().__init__(src,  runnable_directory)
 
     def compile(self):
         shutil.copy(self.src,os.path.join(self.runnable_directory,os.path.basename(self.src)))
-        return os.path.join(os.path.join(self.runnable_directory,os.path.basename(self.src)))
+        self.runnable_file = os.path.join(os.path.join(self.runnable_directory,os.path.basename(self.src)))
 
 class foo_compiler(compiler):
-    def __init__(self, src, runnable_file=' '):
-        super.__init__(src, runnable_file)
+    def __init__(self, src,  runnable_directory=' '):
+        super().__init__(src,  runnable_directory)
 
     def compile(self):
         shutil.copy(self.src,os.path.join(self.runnable_directory,os.path.basename(self.src)))
-        return os.path.join(os.path.join(self.runnable_directory,os.path.basename(self.src)))
+        self.runnable_file = os.path.join(os.path.join(self.runnable_directory,os.path.basename(self.src)))

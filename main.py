@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import compiler
 import runner
 import checker
@@ -16,7 +18,7 @@ def parse(args):
     p.set_stop_policy(args.stop)
     p.set_timelimit(args.timelimit)
     p.set_input_folder(args.input_folder)
-    p.set_output_folder(args.output_folder)
+    p.set_output_folder(os.path.join(p.directory,'output'))
     p.set_answer_folder(args.answer_folder)
     p.set_checker_runable(args.checker)
 
@@ -42,6 +44,9 @@ if __name__ == "__main__":
     parser.add_argument('checker', type=str, help='Runnable checker to ')
     args = parser.parse_args()
     p = parse(args)
-    compiler = p.compiler(args.file, args.directory)
-    runner = p.runner(compiler.runnable_file, p.input_folder,p.output_folder,p.timelimit)
-    checker = p.checker(p.checker_runnable,p.input_folder,p.output_folder,p.answer_folder,p.stop)
+    c = p.compiler(args.file, args.directory)
+    c.compile()
+    r = p.runner(c.runnable_file, p.input_folder,p.output_folder,p.timelimit)
+    r.run()
+    c = p.checker(p.checker_runnable,p.input_folder,p.output_folder,p.answer_folder,p.stop)
+    c.check()

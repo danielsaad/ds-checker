@@ -29,12 +29,14 @@ class pipeline:
         self.answer_folder = answer_folder
 
     def set_checker_runable(self,checker_runnable):
-        self.checker_runnable = checker
+        self.checker_runnable = checker_runnable
 
 def create_checker(file):
     ext = os.path.splitext(file)[1]
     if(ext == '.c'):
         return pipeline(compiler.c_compiler, runner.binary_runner, checker.checker)
+    if(ext == '.cpp' or ext == '.cc' or ext == '.C'):
+        return pipeline(compiler.cpp_compiler, runner.binary_runner, checker.checker)
     if(ext == '.java'):
         return pipeline(compiler.java_compiler, runner.java_runner, checker.checker)
     if(ext == '.py2'):
