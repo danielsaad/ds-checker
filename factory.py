@@ -43,4 +43,4 @@ def create_checker(file):
         return pipeline(compiler.python_compiler, runner.python2_runner, checker.checker)
     if(ext == '.py3' or ext == '.py'):
         return pipeline(compiler.python_compiler, runner.python_runner, checker.checker)
-    return pipeline(compiler.foo_compiler, runner.runner, checker.checker)
+    return pipeline(compiler.foo_compiler, runner.binary_runner, checker.checker)

@@ -36,13 +36,17 @@ class runner:
                 print('Time elapsed: {0:.2f}'.format(
                     local_time_end-local_time_start), 'seconds')
                 succ = succ + 1
-            if(rv == 1):
-                print('RE: Runtime error')
-            if (rv == 2):
-                print('TLE: Time Limit Exceeded')
+            else:
+                if(rv == 1):
+                    print('RE: Runtime error')
+                if (rv == 2):
+                    print('TLE: Time Limit Exceeded')
+                if(os.path.isfile(fname_out)):
+                    os.remove(fname_out)
             total = total + 1
         
         print('Successfuly ran',succ,'of',total,'tests')
+        print('Output files produced in ',self.ouf_folder)
 
 class binary_runner(runner):
     def __init__(self, runnable_file='', inf_folder='', ouf_folder='', timelimit=0):

@@ -15,7 +15,7 @@ class checker:
         self.input_folder = in_folder
         self.output_folder = out_folder
         self.ans_folder = ans_folder
-        self.stop = stop
+        self.nonstop = stop
 
     def check(self):
         input_files = [os.path.join(self.input_folder, f) for f in os.listdir(
@@ -24,11 +24,14 @@ class checker:
         total = 0
         succ = 0
         for inf in input_files:
+            total = total + 1
             fname = os.path.basename(inf)
             ouf = os.path.join(self.output_folder, fname)
             ans = os.path.join(self.ans_folder, fname)
             if(not os.path.isfile(ouf)):
                 print('Output', fname, 'not available')
+                if(self.nonstop):
+                    continue
                 sys.exit(1)
             if(not os.path.isfile(ans)):
                 print('Answer', fname, 'not available')
@@ -43,20 +46,20 @@ class checker:
                 succ = succ+1
             elif(checker_output.startswith('wrong answer')):
                 print('Input', fname, ': WA')
-                sys.exit(0)
+                if(not self.nonstop):
+                    sys.exit(0)
             elif(checker_output.startswith('wrong output format')):
                 print('Input', fname, ': PE')
-                if(self.stop):
+                if(not self.nonstop):
                     sys.exit(0)
             elif(checker_output.startswith('FAIL')):
                 print('Input', fname,
                       ': FAIL: maybe the jury solution or the checker are not correct')
-                if(self.stop):
+                if(self.nonstop):
                     sys.exit(0)
             else:
                 print('Input', fname, ': Output not recognized -> ', checker_output)
                 sys.exit(0)
-            total = total + 1
         if(succ == total):
             print('OK: All tests passed!')
         else:
