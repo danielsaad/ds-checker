@@ -6,7 +6,7 @@ import checker
 import argparse
 import os
 import factory
-
+import datetime
 
 def parse(args):
     assert(os.path.isfile(args.file))
@@ -19,7 +19,7 @@ def parse(args):
     p.set_timelimit(args.timelimit)
     p.set_input_folder(args.input_folder)
     folder_name = 'submission_' + datetime.datetime.now().strftime("%y%m%d_%H%M%S")
-    p.set_output_folder(os.path.join(p.directory,folder))
+    p.set_output_folder(os.path.join(p.directory,folder_name))
     p.set_answer_folder(args.answer_folder)
     p.set_checker_runable(args.checker)
 
