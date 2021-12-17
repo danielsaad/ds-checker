@@ -17,7 +17,7 @@ class checker:
         self.ans_folder = ans_folder
         self.nonstop = stop
 
-    def check(self):
+    def check(self,verbose=False):
         input_files = [os.path.join(self.input_folder, f) for f in os.listdir(
             self.input_folder) if os.path.isfile(os.path.join(self.input_folder, f))]
         input_files.sort(key=custom_key)
@@ -40,7 +40,9 @@ class checker:
             command = [self.checker_runnable, inf, ouf, ans]
             p = subprocess.run(
                 command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            checker_output = p.stderr.decode('utf-8')
+            checker_output = p.stderr.decode('utf-8',errors="backslashreplace")
+            if(verbose):
+                print(p.stderr.decode('utf-8',errors="backslashreplace"))
             if(checker_output.startswith('ok')):
                 print('Input', fname, ': AC')
                 succ = succ+1
